@@ -1,0 +1,54 @@
+{
+  "id": "demo_tsp",
+  "metadata": {
+    "id": "demo_tsp",
+    "title": "Tech Support Playbook Escalation",
+    "description": "Demonstrate how the agent guides an on-call engineer through a high-priority outage.",
+    "category": "Support Demo",
+    "tags": ["support", "networking", "incident-response"],
+    "order": 2
+  },
+  "steps": [
+    {
+      "actor": "user",
+      "speaker": "Alex (On-call)",
+      "message": "Nova, I'm joining the bridge. What's the state of the router incident?",
+      "pause": 300
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Nova (Agent)",
+      "message": "Welcome, Alex. Here's the live diagnostic summary from the affected site.",
+      "snippet": "tsp/diagnostics.html",
+      "typingDelay": 1200,
+      "pause": 600
+    },
+    {
+      "actor": "user",
+      "speaker": "Alex (On-call)",
+      "message": "Is the customer entitled to a proactive credit?",
+      "pause": 300
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Nova (Agent)",
+      "message": "Yes. Their contract triggers mitigation after the SLA breach shown below.",
+      "snippet": "tsp/policy_card.html",
+      "typingDelay": 1000,
+      "pause": 500
+    },
+    {
+      "actor": "user",
+      "speaker": "Alex (On-call)",
+      "message": "Great, walk me through the stabilization plan so I can brief the customer.",
+      "pause": 300
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Nova (Agent)",
+      "message": "Here's the sequence we're recommending to restore service and follow up.",
+      "snippet": "tsp/resolution.html",
+      "typingDelay": 1200
+    }
+  ]
+}
