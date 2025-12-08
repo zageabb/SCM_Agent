@@ -1,0 +1,39 @@
+{
+  "id": "dpplp",
+  "metadata": {
+    "id": "dpplp",
+    "title": "Digital Project Procurement & Logistics Plan (DPPLP)",
+    "description": "One-click launch of the procurement + logistics plan for the next release.",
+    "category": "Planning",
+    "tags": ["procurement", "logistics", "dpplp"],
+    "order": 0
+  },
+  "steps": [
+    {
+      "actor": "user",
+      "speaker": "Program Manager",
+      "message": "Load the DPPLP for the Q2 release and summarize the route and vendor stack.",
+      "pause": 260
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Cockpit Agent",
+      "message": "Here is the DPPLP overview with the logistics buffer and pre-approved partners.",
+      "snippet": "dpplp_overview.html",
+      "typingDelay": 1100,
+      "pause": 320
+    },
+    {
+      "actor": "user",
+      "speaker": "Program Manager",
+      "message": "Kick off the launch run and flag any supplier conflicts against the QA timeline.",
+      "pause": 260
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Cockpit Agent",
+      "message": "Starting the run now. I\"ll push blockers to the launch room and keep the QA lead posted.",
+      "typingDelay": 900
+    }
+  ]
+}

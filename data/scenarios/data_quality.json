@@ -1,0 +1,39 @@
+{
+  "id": "data_quality",
+  "metadata": {
+    "id": "data_quality",
+    "title": "Supplier Data Management",
+    "description": "Monitor supplier contracts and related datasets with automated freshness and anomaly checks.",
+    "category": "Data Management",
+    "tags": ["data", "quality", "contracts"],
+    "order": 3
+  },
+  "steps": [
+    {
+      "actor": "user",
+      "speaker": "Ops Lead",
+      "message": "Check if our supplier contracts data is synced and highlight any freshness gaps.",
+      "pause": 260
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Cockpit Agent",
+      "message": "Data connectors are live. Here are the health checks and anomalies I\"m tracking.",
+      "snippet": "data_health.html",
+      "typingDelay": 1000,
+      "pause": 360
+    },
+    {
+      "actor": "user",
+      "speaker": "Ops Lead",
+      "message": "Start a remediation run and alert compliance if contracts are missing SLA terms.",
+      "pause": 280
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Cockpit Agent",
+      "message": "Queued remediation tickets and routed compliance alerts. I\"ll post the audit trail back here when it\"s done.",
+      "typingDelay": 950
+    }
+  ]
+}

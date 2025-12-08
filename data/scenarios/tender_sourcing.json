@@ -1,0 +1,39 @@
+{
+  "id": "tender_sourcing",
+  "metadata": {
+    "id": "tender_sourcing",
+    "title": "Tender Sourcing Plan (TSP)",
+    "description": "Agent-guided sourcing plan and experiment tracker for open tenders.",
+    "category": "Procurement",
+    "tags": ["tender", "rfp", "experiments"],
+    "order": 2
+  },
+  "steps": [
+    {
+      "actor": "user",
+      "speaker": "Procurement PM",
+      "message": "Open the tender sourcing plan and show which RFPs still need clarifications this week.",
+      "pause": 260
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Cockpit Agent",
+      "message": "Loaded the plan. Here is the active tender snapshot with owners and deadlines.",
+      "snippet": "tender_snapshot.html",
+      "typingDelay": 1100,
+      "pause": 400
+    },
+    {
+      "actor": "user",
+      "speaker": "Procurement PM",
+      "message": "Draft a response to vendors who are late and tag the delivery team for pricing review.",
+      "pause": 280
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Cockpit Agent",
+      "message": "On it. I will notify the owners, publish the reply in the portal, and propose a pricing huddle for tomorrow.",
+      "typingDelay": 900
+    }
+  ]
+}

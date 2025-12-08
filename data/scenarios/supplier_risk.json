@@ -1,0 +1,40 @@
+{
+  "id": "supplier_risk",
+  "metadata": {
+    "id": "supplier_risk",
+    "title": "Subcontractor Risk Review",
+    "description": "Scripted walk-through of the cockpit agent assembling a supplier stability readout for Q2.",
+    "category": "Supplier",
+    "tags": ["suppliers", "risk", "launch"],
+    "order": 1
+  },
+  "steps": [
+    {
+      "actor": "user",
+      "speaker": "Escaple IA",
+      "message": "Hey, I need a current state report on our primary vendors supporting new product release in Q2. Can you pull the latest facts?",
+      "pause": 320
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Cockpit Agent",
+      "message": "Sure. I\"ll run a quick stability check and collect a supplier plan to help you mitigate delivery risk this quarter.",
+      "snippet": "supplier_roster.html",
+      "typingDelay": 1200,
+      "pause": 520
+    },
+    {
+      "actor": "user",
+      "speaker": "Escaple IA",
+      "message": "Great, let\"s see risk across supplier names, product quality, and any recent stability signals.",
+      "pause": 360
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Cockpit Agent",
+      "message": "I\"ll start now. You\"ll get a narrative summary, risk classification, and follow-ups on capacity and pricing.",
+      "snippet": "risk_actions.html",
+      "typingDelay": 900
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "id": "audit_readiness",
+  "metadata": {
+    "id": "audit_readiness",
+    "title": "Audit Plan",
+    "description": "Prepare artifacts and audit trails for supplier compliance reviews.",
+    "category": "Compliance",
+    "tags": ["audit", "compliance", "evidence"],
+    "order": 4
+  },
+  "steps": [
+    {
+      "actor": "user",
+      "speaker": "Audit Lead",
+      "message": "Kick off a due diligence pack for our top ten suppliers and include SLA breach evidence.",
+      "pause": 280
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Cockpit Agent",
+      "message": "Starting the pack now. I\"ll assemble contracts, delivery scores, and outstanding penalties.",
+      "snippet": "audit_steps.html",
+      "typingDelay": 950,
+      "pause": 320
+    },
+    {
+      "actor": "user",
+      "speaker": "Audit Lead",
+      "message": "Send me a quick status update once you finish the sampling run.",
+      "pause": 260
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Cockpit Agent",
+      "message": "Will do. I\"ll also attach a CSV export so you can share it with the auditors.",
+      "typingDelay": 900
+    }
+  ]
+}
