@@ -1,0 +1,9 @@
+[
+  { "file": "dpplp.json" },
+  { "file": "supplier_risk.json" },
+  { "file": "tender_sourcing.json" },
+  { "file": "data_quality.json" },
+  { "file": "audit_readiness.json" },
+  { "file": "supplier_status.json" },
+  { "file": "supplier_office.json" }
+]

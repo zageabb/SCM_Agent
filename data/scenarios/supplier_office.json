@@ -1,0 +1,39 @@
+{
+  "id": "supplier_office",
+  "metadata": {
+    "id": "supplier_office",
+    "title": "Supplier Office Evaluation",
+    "description": "Facility readiness and onboarding checklist for supplier site visits.",
+    "category": "Supplier",
+    "tags": ["office", "evaluation", "visit"],
+    "order": 6
+  },
+  "steps": [
+    {
+      "actor": "user",
+      "speaker": "Operations",
+      "message": "Show the evaluation plan for tomorrow's supplier office walkthrough.",
+      "pause": 240
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Cockpit Agent",
+      "message": "Loaded the site evaluation list with readiness checks and onboarding notes.",
+      "snippet": "office_eval.html",
+      "typingDelay": 900,
+      "pause": 320
+    },
+    {
+      "actor": "user",
+      "speaker": "Operations",
+      "message": "Share it with the inspection crew and add a note about visitor management.",
+      "pause": 240
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Cockpit Agent",
+      "message": "Sent. I included the badge policy reminder and scheduled a post-visit review.",
+      "typingDelay": 900
+    }
+  ]
+}

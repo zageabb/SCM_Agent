@@ -1,0 +1,26 @@
+{
+  "id": "supplier_status",
+  "metadata": {
+    "id": "supplier_status",
+    "title": "Supplier Status Report",
+    "description": "Quick progress check on supplier delivery and pricing for the current quarter.",
+    "category": "Supplier",
+    "tags": ["status", "suppliers", "report"],
+    "order": 5
+  },
+  "steps": [
+    {
+      "actor": "user",
+      "speaker": "Delivery Lead",
+      "message": "Pull a supplier status report with delivery outlook and pricing notes.",
+      "pause": 240
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Cockpit Agent",
+      "message": "Here is the current status. I\"ll keep updating this channel if anything shifts.",
+      "snippet": "status_report.html",
+      "typingDelay": 950
+    }
+  ]
+}
