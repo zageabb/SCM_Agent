@@ -6,11 +6,15 @@ const retryBtn = document.getElementById('retry-btn');
 const userInput = document.getElementById('user-input');
 const runAgentBtn = document.getElementById('run-agent');
 const newRunBtn = document.getElementById('new-run');
+const categoryFilters = document.getElementById('category-filters');
+const searchInput = document.getElementById('scenario-search');
+const refineInput = document.getElementById('scenario-refine');
 
 let scenarios = [];
 let activeScenario = null;
 let playing = false;
 let typingTimer = null;
+let activeCategory = 'All';
 
 async function loadScenarios() {
   try {
@@ -21,31 +25,76 @@ async function loadScenarios() {
         return data;
       })
     );
+    renderCategoryFilters();
     renderScenarioGrid();
   } catch (error) {
     console.error('Failed to load scenarios', error);
   }
 }
 
+function getCategories() {
+  const categories = new Set(['All']);
+  scenarios.forEach((scenario) => {
+    const cat = scenario.metadata?.category;
+    if (cat) categories.add(cat);
+  });
+  return Array.from(categories);
+}
+
+function renderCategoryFilters() {
+  categoryFilters.innerHTML = '';
+  getCategories().forEach((cat) => {
+    const chip = document.createElement('button');
+    chip.className = `chip ${activeCategory === cat ? 'active' : ''}`;
+    chip.textContent = cat;
+    chip.addEventListener('click', () => {
+      activeCategory = cat;
+      renderCategoryFilters();
+      renderScenarioGrid();
+    });
+    categoryFilters.appendChild(chip);
+  });
+}
+
+function matchesSearch(scenario) {
+  const query = `${searchInput.value} ${refineInput.value}`.toLowerCase();
+  if (!query.trim()) return true;
+  const { title = '', description = '', tags = [] } = scenario.metadata || {};
+  return (
+    title.toLowerCase().includes(query) ||
+    description.toLowerCase().includes(query) ||
+    tags.some((tag) => tag.toLowerCase().includes(query))
+  );
+}
+
+function scenarioInCategory(scenario) {
+  if (activeCategory === 'All') return true;
+  return scenario.metadata?.category === activeCategory;
+}
+
 function renderScenarioGrid() {
   scenarioGrid.innerHTML = '';
   scenarios
+    .filter((scenario) => scenarioInCategory(scenario) && matchesSearch(scenario))
     .sort((a, b) => (a.metadata.order ?? 0) - (b.metadata.order ?? 0))
     .forEach((scenario) => {
       const card = document.createElement('article');
       card.className = 'card';
+      const tags = (scenario.metadata.tags || []).slice(0, 3).join(', ');
       card.innerHTML = `
         <div class="meta">
-          <span class="icon">★</span>
+          <span class="icon">📌</span>
           <span>${scenario.metadata.category}</span>
+          <span class="pill">Action</span>
         </div>
         <h3>${scenario.metadata.title}</h3>
         <p>${scenario.metadata.description}</p>
         <div class="meta">
-          <span>${scenario.metadata.tags.join(', ')}</span>
+          <span>${tags}</span>
           <span class="pill">Agent: Chat Agent</span>
         </div>
         <div class="actions">
+          <label class="chip"><input type="checkbox" aria-label="Select ${scenario.metadata.title}"> Select</label>
           <button class="primary-btn" data-id="${scenario.id}">Open Scenario</button>
           <span class="pill">🚀 Cockpit Agent</span>
         </div>
@@ -162,6 +211,20 @@ function startScenario(id) {
   playScenario(scenario);
 }
 
+function handleQuickAction(action) {
+  const canned = {
+    'build-agent': 'Launching the agent builder canvas. Share the target workflow and data sources to scaffold.',
+    'upload-data': 'Opening data intake. Drop your spreadsheet, PDF, or connect a source to start ingestion.',
+    'fqa-question': 'Ask me any supplier or sourcing question—I will pull from indexed knowledge.',
+    'trigger-run': 'Triggering a fresh agent run with the current configuration and variables.',
+    'browse-workflows': 'Here are the available workflows. Pick one to preview or kick off.',
+  };
+
+  if (canned[action]) {
+    addMessage('assistant', 'Cockpit Agent', canned[action]);
+  }
+}
+
 retryBtn.addEventListener('click', () => {
   if (activeScenario) {
     playing = false;
@@ -177,12 +240,19 @@ runAgentBtn.addEventListener('click', () => {
   if (!message) return;
   addMessage('user', 'You', message);
   userInput.value = '';
-  addMessage('assistant', 'Cockpit Agent', 'I\'ll route this to the right workflow and respond with an action plan.');
+  addMessage('assistant', 'Cockpit Agent', "I'll route this to the right workflow and respond with an action plan.");
 });
 
 newRunBtn.addEventListener('click', () => {
   chatBody.innerHTML = '';
   userInput.value = '';
+});
+
+searchInput.addEventListener('input', renderScenarioGrid);
+refineInput.addEventListener('input', renderScenarioGrid);
+
+document.querySelectorAll('.action-buttons .ghost-btn').forEach((btn) => {
+  btn.addEventListener('click', () => handleQuickAction(btn.dataset.action));
 });
 
 loadScenarios();

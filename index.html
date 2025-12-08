@@ -8,76 +8,125 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo">SCM</div>
-      <div class="brand-text">
-        <div class="title">SCM Cockpit</div>
-        <div class="subtitle">Agent Demo</div>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="sidebar-brand">SCM</div>
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" aria-label="Home">🏠</button>
+        <button class="nav-btn" aria-label="Analytics">📊</button>
+        <button class="nav-btn" aria-label="Agents">🤖</button>
+        <button class="nav-btn" aria-label="Data sources">🗂️</button>
+        <button class="nav-btn" aria-label="Settings">⚙️</button>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="nav-btn" aria-label="Help">❔</button>
       </div>
-    </div>
-    <div class="search">
-      <input type="search" placeholder="Search workflows, agents, data sources" aria-label="Search" />
-    </div>
-    <div class="top-actions">
-      <button class="icon-btn" aria-label="Agent factory">🏭</button>
-      <button class="icon-btn" aria-label="Help">❔</button>
-      <div class="profile">
-        <span class="user-name">My Account</span>
-        <div class="avatar">EJ</div>
-      </div>
-    </div>
-  </header>
+    </aside>
 
-  <main class="layout">
-    <section class="panel scenarios">
-      <div class="panel-header">
-        <div>
-          <div class="eyebrow">Cockpit Intelligence</div>
-          <h1>Access powerful modules and agent <br> experiences that make an impact.</h1>
-          <p>From the menu on the right, pick a workflow or a module below to begin.</p>
+    <div class="page">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">SCM</div>
+          <div class="brand-text">
+            <div class="title">SCM Cockpit</div>
+            <div class="subtitle">Agent Demo</div>
+          </div>
         </div>
-        <div class="filters">
-          <button class="chip active">Favorites</button>
-          <button class="chip">Agent Planning</button>
-          <button class="chip">Supplier</button>
-          <button class="chip">Data Management</button>
+        <div class="search">
+          <input id="scenario-search" type="search" placeholder="Search workflows, agents, data sources" aria-label="Search" />
         </div>
-      </div>
-      <div id="scenario-grid" class="scenario-grid"></div>
-    </section>
+        <div class="top-actions">
+          <div class="pill muted">🟢 Live</div>
+          <button class="icon-btn" aria-label="Agent factory">🏭</button>
+          <button class="icon-btn" aria-label="Notifications">🔔</button>
+          <button class="icon-btn" aria-label="Add">➕</button>
+          <div class="profile">
+            <span class="user-name">My Account</span>
+            <div class="avatar">EJ</div>
+          </div>
+        </div>
+      </header>
 
-    <section class="panel chat">
-      <div class="chat-header">
-        <div>
-          <div class="eyebrow">Cockpit AI</div>
-          <h2 id="chat-title">Select a scenario to get started</h2>
-          <p id="chat-description">Pick a scenario card to load a scripted run.</p>
-        </div>
-        <div class="chat-controls">
-          <label class="switch"><input type="checkbox" checked><span>Available</span></label>
-          <button id="retry-btn" class="secondary-btn">↻ Restart</button>
-        </div>
-      </div>
-      <div class="chat-box">
-        <div class="chat-body" id="chat-body"></div>
-        <div class="chat-input-row">
-          <div class="input-stack">
-            <textarea id="user-input" rows="2" placeholder="Type your message"></textarea>
-            <div class="input-actions">
-              <button class="text-btn" id="pick-date">Pick date</button>
-              <button class="text-btn" id="attach-data">Attach data sources</button>
-              <span class="helper">Rich agent actions will be added here.</span>
+      <main class="layout">
+        <section class="panel scenarios">
+          <div class="panel-header">
+            <div>
+              <div class="eyebrow">Cockpit Intelligence</div>
+              <h1>Access powerful modules and agent <br> experiences that make an impact.</h1>
+              <p>From the menu on the right, pick a workflow or a module below to begin.</p>
+            </div>
+            <div class="filters" id="category-filters"></div>
+          </div>
+
+          <div class="actions-bar">
+            <div class="quick-actions">
+              <span class="eyebrow">Quick Actions</span>
+              <div class="action-buttons">
+                <button class="ghost-btn" data-action="build-agent">Build agent</button>
+                <button class="ghost-btn" data-action="upload-data">Upload data</button>
+                <button class="ghost-btn" data-action="fqa-question">FQA question</button>
+                <button class="ghost-btn" data-action="trigger-run">Trigger run</button>
+                <button class="ghost-btn" data-action="browse-workflows">Browse workflows</button>
+              </div>
+            </div>
+            <div class="scenario-search">
+              <input id="scenario-refine" type="search" placeholder="Refine scenarios" aria-label="Filter scenarios">
             </div>
           </div>
-          <div class="cta-stack">
-            <button class="primary-btn" id="run-agent">Run agent</button>
-            <button class="ghost-btn" id="new-run">New run</button>
+
+          <div id="scenario-grid" class="scenario-grid"></div>
+        </section>
+
+        <section class="panel chat">
+          <div class="chat-header">
+            <div>
+              <div class="eyebrow">Cockpit AI</div>
+              <h2 id="chat-title">Select a scenario to get started</h2>
+              <p id="chat-description">Pick a scenario card to load a scripted run.</p>
+            </div>
+            <div class="chat-controls">
+              <label class="switch"><input type="checkbox" checked><span>Available</span></label>
+              <button id="retry-btn" class="secondary-btn">↻ Restart</button>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
-  </main>
+
+          <div class="chat-toolbar">
+            <div class="pill">Model: smaug-mixtral</div>
+            <div class="pill">Variables: cms demo, clear pipeline</div>
+            <div class="pill">Session: thread-1234</div>
+            <div class="pill">Run: training-fullrun-a</div>
+            <div class="toolbar-actions">
+              <button class="icon-btn" aria-label="Refresh">↻</button>
+              <button class="icon-btn" aria-label="Upload">⭳</button>
+              <button class="icon-btn" aria-label="Up">⬆</button>
+              <button class="icon-btn" aria-label="Down">⬇</button>
+              <button class="icon-btn" aria-label="Double up">⏫</button>
+              <button class="icon-btn" aria-label="Undo">↩</button>
+              <button class="icon-btn" aria-label="Redo">↪</button>
+            </div>
+          </div>
+
+          <div class="chat-box">
+            <div class="chat-body" id="chat-body"></div>
+            <div class="chat-input-row">
+              <div class="input-stack">
+                <textarea id="user-input" rows="2" placeholder="Type your message"></textarea>
+                <div class="input-actions">
+                  <button class="text-btn" id="pick-date">Pick date</button>
+                  <button class="text-btn" id="attach-data">Attach data sources</button>
+                  <span class="helper">Rich agent actions will be added here.</span>
+                </div>
+              </div>
+              <div class="cta-stack">
+                <button class="primary-btn" id="run-agent">Run agent</button>
+                <button class="ghost-btn" id="new-run">New run</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
 
   <script src="app.js" type="module"></script>
 </body>

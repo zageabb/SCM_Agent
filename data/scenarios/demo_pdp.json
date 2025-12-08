@@ -1,0 +1,68 @@
+{
+  "id": "demo_pdp",
+  "metadata": {
+    "id": "demo_pdp",
+    "title": "Product Detail Page Vision Walkthrough",
+    "description": "Show how the storefront agent narrates the PDP refresh with supporting UI snippets.",
+    "category": "Product Demo",
+    "tags": ["retail", "ux", "conversion"],
+    "order": 1
+  },
+  "steps": [
+    {
+      "actor": "user",
+      "speaker": "Jamie (PM)",
+      "message": "Riley, can you give our VP the high-level story for the PDP redesign?",
+      "pause": 300
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Riley (Agent)",
+      "message": "Absolutely. Here's the discovery context we use to open the conversation.",
+      "snippet": "pdp/step1.html",
+      "typingDelay": 1200,
+      "pause": 600
+    },
+    {
+      "actor": "user",
+      "speaker": "Jamie (PM)",
+      "message": "They will want to click through assets. Can you surface the quick links?",
+      "pause": 300
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Riley (Agent)",
+      "message": "Of course. These are the three references we highlight in the meeting.",
+      "snippet": "pdp/spec_links.html",
+      "typingDelay": 1100,
+      "pause": 500
+    },
+    {
+      "actor": "user",
+      "speaker": "Jamie (PM)",
+      "message": "What's our personalization angle once this ships?",
+      "pause": 300
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Riley (Agent)",
+      "message": "We emphasize the adaptive hero and the experiments queued up next.",
+      "snippet": "pdp/personalization.html",
+      "typingDelay": 1400,
+      "pause": 500
+    },
+    {
+      "actor": "user",
+      "speaker": "Jamie (PM)",
+      "message": "Great. Close with who owns the launch tasks.",
+      "pause": 300
+    },
+    {
+      "actor": "assistant",
+      "speaker": "Riley (Agent)",
+      "message": "Here's the action list we're tracking for leadership.",
+      "snippet": "pdp/next_steps.html",
+      "typingDelay": 1000
+    }
+  ]
+}
