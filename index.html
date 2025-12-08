@@ -54,11 +54,6 @@
               <div class="eyebrow">Cockpit Intelligence</div>
               <h1>Access powerful modules and agent <br> experiences that make an impact.</h1>
               <p>From the menu on the right, pick a workflow or a module below to begin.</p>
-              <div class="meta-row" id="scenario-meta">
-                <span class="meta-pill" id="meta-category">No category</span>
-                <span class="meta-pill" id="meta-filename">—</span>
-                <span class="meta-pill" id="meta-tags">Add tags to improve discovery</span>
-              </div>
             </div>
             <div class="filters" id="category-filters"></div>
           </div>
@@ -77,6 +72,7 @@
             <div class="scenario-search">
               <input id="scenario-refine" type="search" placeholder="Refine scenarios" aria-label="Filter scenarios">
             </div>
+            <div class="filters" id="category-filters"></div>
           </div>
 
           <div id="scenario-grid" class="scenario-grid"></div>
@@ -91,7 +87,6 @@
             </div>
             <div class="chat-controls">
               <label class="switch"><input type="checkbox" checked><span>Available</span></label>
-              <button id="copy-btn" class="secondary-btn" aria-label="Copy transcript">⧉ Copy</button>
               <button id="retry-btn" class="secondary-btn">↻ Restart</button>
             </div>
           </div>
@@ -113,10 +108,7 @@
           </div>
 
           <div class="chat-box">
-            <div class="chat-body" id="chat-body">
-              <div class="empty-state" id="chat-empty">Choose a scenario to preview the scripted conversation.</div>
-            </div>
-            <div class="chat-feedback" id="chat-feedback" role="status" aria-live="polite"></div>
+            <div class="chat-body" id="chat-body"></div>
             <div class="chat-input-row">
               <div class="input-stack">
                 <textarea id="user-input" rows="2" placeholder="Type your message"></textarea>

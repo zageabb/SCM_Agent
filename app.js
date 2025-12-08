@@ -12,11 +12,6 @@ const newRunBtn = document.getElementById('new-run');
 const categoryFilters = document.getElementById('category-filters');
 const searchInput = document.getElementById('scenario-search');
 const refineInput = document.getElementById('scenario-refine');
-const metaCategory = document.getElementById('meta-category');
-const metaFilename = document.getElementById('meta-filename');
-const metaTags = document.getElementById('meta-tags');
-
-const accentPalette = ['#6366f1', '#0ea5e9', '#f59e0b', '#ec4899', '#10b981'];
 
 let scenarios = [];
 let scenarioMap = new Map();
@@ -25,21 +20,6 @@ let playing = false;
 let playbackToken = 0;
 let typingTimer = null;
 let activeCategory = 'All';
-
-function setFeedback(message) {
-  if (!chatFeedback) return;
-  chatFeedback.textContent = message || '';
-}
-
-function setAccent(id) {
-  const text = String(id || '');
-  let sum = 0;
-  for (let i = 0; i < text.length; i += 1) {
-    sum += text.charCodeAt(i);
-  }
-  const color = accentPalette[sum % accentPalette.length];
-  document.documentElement.style.setProperty('--primary', color);
-}
 
 async function loadScenarios() {
   try {
@@ -52,7 +32,6 @@ async function loadScenarios() {
         return data;
       })
     );
-    scenarioMap = new Map(scenarios.map((s) => [s.id, s]));
     renderCategoryFilters();
     renderScenarioGrid();
     const first = scenarios[0];
@@ -126,6 +105,46 @@ function setActiveScenario(id) {
   }
 }
 
+function getCategories() {
+  const categories = new Set(['All']);
+  scenarios.forEach((scenario) => {
+    const cat = scenario.metadata?.category;
+    if (cat) categories.add(cat);
+  });
+  return Array.from(categories);
+}
+
+function renderCategoryFilters() {
+  categoryFilters.innerHTML = '';
+  getCategories().forEach((cat) => {
+    const chip = document.createElement('button');
+    chip.className = `chip ${activeCategory === cat ? 'active' : ''}`;
+    chip.textContent = cat;
+    chip.addEventListener('click', () => {
+      activeCategory = cat;
+      renderCategoryFilters();
+      renderScenarioGrid();
+    });
+    categoryFilters.appendChild(chip);
+  });
+}
+
+function matchesSearch(scenario) {
+  const query = `${searchInput.value} ${refineInput.value}`.toLowerCase();
+  if (!query.trim()) return true;
+  const { title = '', description = '', tags = [] } = scenario.metadata || {};
+  return (
+    title.toLowerCase().includes(query) ||
+    description.toLowerCase().includes(query) ||
+    tags.some((tag) => tag.toLowerCase().includes(query))
+  );
+}
+
+function scenarioInCategory(scenario) {
+  if (activeCategory === 'All') return true;
+  return scenario.metadata?.category === activeCategory;
+}
+
 function renderScenarioGrid() {
   scenarioGrid.innerHTML = '';
   scenarios
@@ -134,21 +153,21 @@ function renderScenarioGrid() {
     .forEach((scenario) => {
       const card = document.createElement('article');
       card.className = 'card';
-      card.dataset.id = scenario.id;
       const tags = (scenario.metadata.tags || []).slice(0, 3).join(', ');
       card.innerHTML = `
         <div class="meta">
           <span class="icon">📌</span>
-          <span>${scenario.metadata.category || 'Uncategorized'}</span>
-          <span class="pill">${scenario.metadata.filename}</span>
+          <span>${scenario.metadata.category}</span>
+          <span class="pill">Action</span>
         </div>
         <h3>${scenario.metadata.title}</h3>
         <p>${scenario.metadata.description}</p>
         <div class="meta">
           <span>${tags}</span>
-          <span class="pill">${scenario.id}</span>
+          <span class="pill">Agent: Chat Agent</span>
         </div>
         <div class="actions">
+          <label class="chip"><input type="checkbox" aria-label="Select ${scenario.metadata.title}"> Select</label>
           <button class="primary-btn" data-id="${scenario.id}">Open Scenario</button>
           <span class="pill">🚀 Cockpit Agent</span>
         </div>
@@ -341,6 +360,20 @@ function handleQuickAction(action) {
   }
 }
 
+function handleQuickAction(action) {
+  const canned = {
+    'build-agent': 'Launching the agent builder canvas. Share the target workflow and data sources to scaffold.',
+    'upload-data': 'Opening data intake. Drop your spreadsheet, PDF, or connect a source to start ingestion.',
+    'fqa-question': 'Ask me any supplier or sourcing question—I will pull from indexed knowledge.',
+    'trigger-run': 'Triggering a fresh agent run with the current configuration and variables.',
+    'browse-workflows': 'Here are the available workflows. Pick one to preview or kick off.',
+  };
+
+  if (canned[action]) {
+    addMessage('assistant', 'Cockpit Agent', canned[action]);
+  }
+}
+
 retryBtn.addEventListener('click', () => {
   if (activeScenario) {
     playScenario(activeScenario, { restart: true });
@@ -370,7 +403,7 @@ runAgentBtn.addEventListener('click', () => {
   ensureChatActive();
   addMessage('user', 'You', message, null, playbackToken);
   userInput.value = '';
-  addMessage('assistant', 'Cockpit Agent', "I'll route this to the right workflow and respond with an action plan.", null, playbackToken);
+  addMessage('assistant', 'Cockpit Agent', "I'll route this to the right workflow and respond with an action plan.");
 });
 
 newRunBtn.addEventListener('click', () => {
@@ -392,6 +425,13 @@ window.addEventListener('keydown', (event) => {
     playing = false;
   }
 });
+
+document.querySelectorAll('.action-buttons .ghost-btn').forEach((btn) => {
+  btn.addEventListener('click', () => handleQuickAction(btn.dataset.action));
+});
+
+searchInput.addEventListener('input', renderScenarioGrid);
+refineInput.addEventListener('input', renderScenarioGrid);
 
 document.querySelectorAll('.action-buttons .ghost-btn').forEach((btn) => {
   btn.addEventListener('click', () => handleQuickAction(btn.dataset.action));
